@@ -1,0 +1,23 @@
+{
+  "name": "proshop",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "eCommerce application is built with MERN stack.",
+  "main": "app.js",
+  "scripts": {
+    "start": "node backend/app.js",
+    "server": "nodemon backend/app.js",
+    "client": "npm start --prefix frontend",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "author": "Obar 23",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "dotenv": "^16.3.1",
+    "nodemon": "^3.0.1"
+  }
+}

@@ -1,2 +1,2 @@
 # Pro Shop
-progress: 57/94
+progress: 59/94

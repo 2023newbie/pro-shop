@@ -1,5 +1,5 @@
 # Pro Shop
-progress: 65/94
+progress: 67/94
 
 ## Overview
 
@@ -77,7 +77,7 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## Acknowledgments
 
-- Special thanks to [Framework/Technology Name] for making development easier.
+- Special thanks to ReactJS for making development easier.
 - Hat tip to anyone whose code was used.
 - Inspiration for the project.
 

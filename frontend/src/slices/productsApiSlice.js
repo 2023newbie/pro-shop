@@ -6,24 +6,39 @@ export const productsApiSlice = apiSlice.injectEndpoints({
     getProducts: builder.query({
       query: () => ({
         url: PRODUCTS_URL,
+        // params: { keyword, pageNumber }
       }),
-      keepUnusedDataFor: 5
+      providesTags: ['Products'],
+      keepUnusedDataFor: 5,
     }),
     getProductDetails: builder.query({
-      query: (productId) => ({
-        url: `${PRODUCTS_URL}/${productId}`
+      query: productId => ({
+        url: `${PRODUCTS_URL}/${productId}`,
       }),
-      keepUnusedDataFor: 5
+      keepUnusedDataFor: 5,
     }),
     createProduct: builder.mutation({
       query: product => ({
         url: PRODUCTS_URL,
         method: 'POST',
-        body: product
+        body: product,
       }),
-      invalidatesTags: ['Product']
-    })
+      invalidatesTags: ['Products'],
+    }),
+    updateProduct: builder.mutation({
+      query: product => ({
+        url: `${PRODUCTS_URL}/${product.productId}`,
+        method: 'PUT',
+        body: product,
+      }),
+      invalidatesTags: ['Product'],
+    }),
   }),
 })
 
-export const { useGetProductsQuery, useGetProductDetailsQuery, useCreateProductMutation } = productsApiSlice
+export const {
+  useGetProductsQuery,
+  useGetProductDetailsQuery,
+  useCreateProductMutation,
+  useUpdateProductMutation,
+} = productsApiSlice

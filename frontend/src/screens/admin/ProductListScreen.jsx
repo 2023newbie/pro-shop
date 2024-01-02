@@ -7,19 +7,29 @@ import { toast } from 'react-toastify'
 import {
   useGetProductsQuery,
   useCreateProductMutation,
+  useDeleteProductMutation
 } from '../../slices/productsApiSlice'
 
 const ProductListScreen = () => {
   const { data: products, refetch, isLoading, error } = useGetProductsQuery()
   const [createProduct, { isLoading: loadingCreateProduct }] =
     useCreateProductMutation()
+  const [deleteProduct, { isLoading: loadingDeleteProduct }] = useDeleteProductMutation()
 
-  const deleteHandler = id => {
-    console.log(id)
+  const deleteHandler = async id => {
+    if (window.confirm('Are you sure to delete product?')) {
+      try {
+        await deleteProduct(id)
+        refetch()
+        toast.success('Product deleted successfully.')
+      } catch (err) {
+        toast.error(err?.data?.message || err.message)
+      }
+    }
   }
 
   const createProductHandler = async () => {
-    if (window.confirm('Are you sure you want to create new product?')) {
+    if (window.confirm('Are you sure to create new product?')) {
       try {
         await createProduct({})
         refetch()
@@ -45,50 +55,50 @@ const ProductListScreen = () => {
 
       {loadingCreateProduct && <Loader />}
 
+      {loadingDeleteProduct && <Loader />}
+
       {isLoading ? (
         <Loader />
       ) : error ? (
         <Message variant="danger">{error}</Message>
       ) : (
-        <>
-          <Table striped hover responsive className="table-sm">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>NAME</th>
-                <th>PRICE</th>
-                <th>CATEGORY</th>
-                <th>BRAND</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {products.map(product => (
-                <tr key={product._id}>
-                  <td>{product._id}</td>
-                  <td>{product.name}</td>
-                  <td>{product.price}</td>
-                  <td>{product.category}</td>
-                  <td>{product.brand}</td>
-                  <td>
-                    <LinkContainer to={`/admin/product/${product._id}/edit`}>
-                      <Button variant="light" className="btn-sm mx-2">
-                        <FaEdit />
-                      </Button>
-                    </LinkContainer>
-                    <Button
-                      variant="danger"
-                      className="btn-sm"
-                      onClick={() => deleteHandler(product._id)}
-                    >
-                      <FaTrash style={{ color: '#fff' }} />
+        <Table striped hover responsive className="table-sm">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>NAME</th>
+              <th>PRICE</th>
+              <th>CATEGORY</th>
+              <th>BRAND</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {products.map(product => (
+              <tr key={product._id}>
+                <td>{product._id}</td>
+                <td>{product.name}</td>
+                <td>{product.price}</td>
+                <td>{product.category}</td>
+                <td>{product.brand}</td>
+                <td>
+                  <LinkContainer to={`/admin/product/${product._id}/edit`}>
+                    <Button variant="light" className="btn-sm mx-2">
+                      <FaEdit />
                     </Button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        </>
+                  </LinkContainer>
+                  <Button
+                    variant="danger"
+                    className="btn-sm"
+                    onClick={() => deleteHandler(product._id)}
+                  >
+                    <FaTrash style={{ color: '#fff' }} />
+                  </Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
       )}
     </>
   )

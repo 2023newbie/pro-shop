@@ -1,5 +1,5 @@
 # Pro Shop
-progress: 76/94
+progress: 77/94
 
 ## Overview
 

@@ -124,7 +124,7 @@ const getUserById = asyncHandler(async (req, res, next) => {
 // @route   DELETE /api/users/:id
 // @access  Private/admin
 const deleteUser = asyncHandler(async (req, res, next) => {
-  const user = await User.findOne({id: req.params.id})
+  const user = await User.findOne({_id: req.params.id})
   if (user) {
     if (user.isAdmin) {
       res.status(400)

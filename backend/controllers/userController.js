@@ -111,12 +111,12 @@ const getUsers = asyncHandler(async (req, res, next) => {
 // @route   GET /api/users/:id
 // @access  Private/admin
 const getUserById = asyncHandler(async (req, res, next) => {
-  const user = await User.findOne({id: req.params.id}).select('-password')
+  const user = await User.findOne({_id: req.params.id}).select('-password')
   if (user) {
     res.status(201).json(user)
   } else {
     res.status(404)
-    throw new Error('User not found')
+    throw new Error('User not found') 
   }
 })
 
@@ -148,7 +148,7 @@ const updateUser = asyncHandler(async (req, res, next) => {
     user.email = req.body.email || user.email
     user.isAdmin = Boolean(req.body.isAdmin) || user.isAdmin
 
-    const updatedUser = await User.save()
+    const updatedUser = await user.save()
     res.status(201).json({
       _id: updatedUser._id,
       name: updatedUser.name,

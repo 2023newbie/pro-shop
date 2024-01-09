@@ -17,7 +17,6 @@ const ProductEditScreen = () => {
     data: product,
     isLoading,
     error,
-    refetch,
   } = useGetProductDetailsQuery(productId)
 
   const [name, setName] = useState('')
@@ -132,6 +131,7 @@ const ProductEditScreen = () => {
                 onChange={ uploadFileHandler }
               />
             </Form.Group>
+            {loadingUpload && <Loader />}
 
             <Form.Group className="my-2" controlId="brand">
               <Form.Label>Brand</Form.Label>

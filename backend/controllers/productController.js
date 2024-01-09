@@ -5,7 +5,7 @@ import asyncHandler from '../middleware/asyncHandler.js'
 // @route  GET /api/products
 // @access  Public
 const getProducts = asyncHandler(async (req, res, next) => {
-  const pageSize = 8
+  const pageSize = process.env.PAGINATION_LIMIT
   const page = Number(req.query.pageNumber) || 1
 
   const keyword = req.query.keyword
